@@ -24,17 +24,19 @@ namespace Booking.Service
         {
             return _zimmerRepository.GetZimmerById(id);
         }
-        public void DeleteZimmer(int id)
-        {
-            _zimmerRepository.DeleteZimmer(id);
-        }
         public void AddZimmer(Zimmer zimmer)
         {
             _zimmerRepository.AddZimmer(zimmer);
         }
-        public void UpDateZimmer(int id,Zimmer zimmer)
+
+        public void UpdateZimmer(int id,Zimmer zimmer)
         {
-            _zimmerRepository.UpDateZimmer(id,zimmer);
+            _zimmerRepository.UpdateZimmer(id,zimmer);
         }
+        public void DeleteZimmer(int id)
+        {
+            _zimmerRepository.DeleteZimmer(id);
+        }
+       
     }
 }

@@ -14,7 +14,7 @@ namespace Booking.Date
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=laliBooking");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Booking_DB");
         }
 
         //public DataContext()

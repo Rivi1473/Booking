@@ -9,10 +9,11 @@ namespace Booking.Core.Services
 {
     public interface IOrderService
     {
-        public void AddOrder(Orders o);
-        public void UpDateOrder(int id,Orders o);
-        public void DeleteOrder(int id);
         public Orders GetOrderById(int id);
         public List<Orders> GetAllOrders();
+        public void AddOrder(Orders o);
+        public void UpdateOrder(int id,Orders o);
+        public void DeleteOrder(int id);
+        
     }
 }

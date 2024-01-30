@@ -1,10 +1,14 @@
 ﻿namespace Booking.Core.Entities
 {
-    public class Renter
+    public class Renter:BaseModel
     {
-        public int renterId { get; set; }
-        public string? name { get; set; }
-        public string? phone { get; set; }
+       
+        public string? Name { get; set; }
+        public string? Phone { get; set; }
+
+        public List<Zimmer> Zimmers { get; set; }
+
+
 
 
     }

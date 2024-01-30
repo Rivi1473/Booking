@@ -11,7 +11,7 @@ namespace Booking.Core.Repositories
     public interface IOrderRepository
     {
         public void AddOrder(Orders o);
-        public void UpDateOrder(int id, Orders o);
+        public void UpdateOrder(int id, Orders o);
         public void DeleteOrder(int id);
         public Orders GetOrdersById(int id);
         public List<Orders> GetAllOrders();

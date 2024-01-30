@@ -24,23 +24,25 @@ namespace Booking.Data.Repositories
         {
             return _context.Renters.Find(id);
         }
+        
+        public void AddRenter(Renter r)
+        {
+            _context.Renters.Add(r);
+            _context.SaveChanges();
+        }
+        public void UpdateRenter(int id,Renter r)
+        {
+            var renter = GetRenterById(id);         
+            renter.Name = r.Name;
+            renter.Phone = r.Phone;
+            _context.SaveChanges();
+        }
         public void DeleteRenter(int id)
         {
             var renter = GetRenterById(id);
             _context.Renters.Remove(renter);
             _context.SaveChanges();
         }
-        public void UpDateRenter(int id,Renter r)
-        {
-            var renter = GetRenterById(id);         
-            renter.name = r.name;
-            renter.phone = r.phone;
-            _context.SaveChanges();
-        }
-        public void AddRenter(Renter r)
-        {
-            _context.Renters.Add(r);
-            _context.SaveChanges();
-        }
+
     }
 }

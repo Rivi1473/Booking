@@ -24,17 +24,17 @@ namespace Booking.Service
         {
             return _orderRepository.GetOrdersById(id);
         }
-        public void DeleteOrder(int id)
-        {
-            _orderRepository.DeleteOrder(id);
-        }
         public void AddOrder(Orders order)
         {
             _orderRepository.AddOrder(order);
         }
-        public void UpDateOrder(int id,Orders order)
+        public void UpdateOrder(int id, Orders order)
         {
-            _orderRepository.UpDateOrder(id,order);
+            _orderRepository.UpdateOrder(id, order);
+        }
+        public void DeleteOrder(int id)
+        {
+            _orderRepository.DeleteOrder(id);
         }
     }
 }

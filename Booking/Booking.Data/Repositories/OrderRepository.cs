@@ -24,32 +24,32 @@ namespace Booking.Data.Repositories
         {
             return _context.Orders.Find(id);
         }
-        public void DeleteOrder(int id)
-        {
-            var order = GetOrdersById(id);         
-            _context.Orders.Remove(order);  
-            _context.SaveChanges(); 
-        }
-        public void UpDateOrder(int id ,Orders o)
-        {
-            var order = GetOrdersById(id);
-            if (order != null)
-            {
-                order.codeZimmer = o.codeZimmer;
-                order.tenantName = o.tenantName;
-                order.tenantPhone = o.tenantPhone;
-                order.orderDate = o.orderDate;
-                order.arrivalDate = o.arrivalDate;
-                order.departureDate = o.departureDate;
-                _context.SaveChanges();
-            }
-            
-        }
         public void AddOrder(Orders o)
         {
             _context.Orders.Add(o);
             _context.SaveChanges();
 
+        }
+        public void UpdateOrder(int id ,Orders o)
+        {
+            var order = GetOrdersById(id);
+            if (order != null)
+            {
+                order.ZimmerId = o.ZimmerId;
+                order.TenantName = o.TenantName;
+                order.TenantPhone = o.TenantPhone;
+                order.OrderDate = o.OrderDate;
+                order.ArrivalDate = o.ArrivalDate;
+                order.DepartureDate = o.DepartureDate;
+                _context.SaveChanges();
+            }
+            
+        }
+        public void DeleteOrder(int id)
+        {
+            var order = GetOrdersById(id);
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
         }
     }
  

@@ -12,7 +12,7 @@ namespace Booking.Core.Repositories
         public List<Renter> GetAllRenters();
         public Renter GetRenterById(int id);
         public void DeleteRenter(int id);
-        public void UpDateRenter(int id, Renter r);
+        public void UpdateRenter(int id, Renter r);
         public void AddRenter(Renter r);
     }
 }

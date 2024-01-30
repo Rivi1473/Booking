@@ -25,17 +25,18 @@ namespace Booking.Service
         {
             return _renterRepository.GetRenterById(id);
         }
-        public void DeleteRenter(int id)
-        {
-            _renterRepository.DeleteRenter(id);
-        }
         public void AddRenter(Renter renter)
         {
             _renterRepository.AddRenter(renter);
         }
-        public void UpDateRenter(int id,Renter renter)
+        
+        public void UpdateRenter(int id,Renter renter)
         {
-            _renterRepository.UpDateRenter(id,renter);
+            _renterRepository.UpdateRenter(id,renter);
+        }
+        public void DeleteRenter(int id)
+        {
+            _renterRepository.DeleteRenter(id);
         }
     }
 }

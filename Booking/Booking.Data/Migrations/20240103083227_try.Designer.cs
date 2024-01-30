@@ -4,6 +4,7 @@ using Booking.Date;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Booking.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240103083227_try")]
+    partial class @try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,123 +26,129 @@ namespace Booking.Data.Migrations
 
             modelBuilder.Entity("Booking.Core.Entities.Orders", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ordersId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ordersId"), 1L, 1);
 
-                    b.Property<DateTime>("ArrivalDate")
+                    b.Property<DateTime>("arrivalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DepartureDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TenantName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenantPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ZimmerId")
+                    b.Property<int>("codeZimmer")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("departureDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("ZimmerId");
+                    b.Property<DateTime>("orderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("tenantName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tenantPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("zimmerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ordersId");
+
+                    b.HasIndex("zimmerId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Renter", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("renterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("renterId"), 1L, 1);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("renterId");
 
                     b.ToTable("Renters");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Zimmer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("zimmerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("zimmerId"), 1L, 1);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
+                    b.Property<string>("city")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("price")
                         .HasColumnType("int");
 
-                    b.Property<int>("RenterId")
+                    b.Property<int>("renterCode")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("renterId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RenterId");
+                    b.HasKey("zimmerId");
+
+                    b.HasIndex("renterId");
 
                     b.ToTable("Zimmers");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Orders", b =>
                 {
-                    b.HasOne("Booking.Core.Entities.Zimmer", "Zimmer")
-                        .WithMany("Orders")
-                        .HasForeignKey("ZimmerId")
+                    b.HasOne("Booking.Core.Entities.Zimmer", "zimmer")
+                        .WithMany("orders")
+                        .HasForeignKey("zimmerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Zimmer");
+                    b.Navigation("zimmer");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Zimmer", b =>
                 {
-                    b.HasOne("Booking.Core.Entities.Renter", "Renter")
-                        .WithMany("Zimmers")
-                        .HasForeignKey("RenterId")
+                    b.HasOne("Booking.Core.Entities.Renter", "renter")
+                        .WithMany("zimmers")
+                        .HasForeignKey("renterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Renter");
+                    b.Navigation("renter");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Renter", b =>
                 {
-                    b.Navigation("Zimmers");
+                    b.Navigation("zimmers");
                 });
 
             modelBuilder.Entity("Booking.Core.Entities.Zimmer", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,26 +24,27 @@ namespace Booking.Data.Repositories
         {
             return _context.Zimmers.Find( id);
         }
+        public void AddZimmer(Zimmer z)
+        {
+            _context.Zimmers.Add(z);
+            _context.SaveChanges();
+        }
+        public void UpdateZimmer(int id,Zimmer z)
+        {
+            var zimmer = GetZimmerById(id);
+            zimmer.Name = z.Name;
+            zimmer.Price = z.Price;
+            zimmer.Address = z.Address;
+            zimmer.City = z.City;
+            zimmer.Description = z.Description;
+            _context.SaveChanges();
+        }
         public void DeleteZimmer(int id)
         {
             var zimmer = GetZimmerById(id);
             _context.Zimmers.Remove(zimmer);
             _context.SaveChanges();
         }
-        public void UpDateZimmer(int id,Zimmer z)
-        {
-            var zimmer = GetZimmerById(id);
-            zimmer.name = z.name;
-            zimmer.price = z.price;
-            zimmer.address = z.address;
-            zimmer.city = z.city;
-            zimmer.description = z.description;
-            _context.SaveChanges();
-        }
-        public void AddZimmer(Zimmer z)
-        {
-            _context.Zimmers.Add(z);
-            _context.SaveChanges();
-        }
+
     }
 }

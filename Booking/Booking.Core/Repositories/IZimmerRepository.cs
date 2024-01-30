@@ -12,7 +12,7 @@ namespace Booking.Core.Repositories
         public List<Zimmer> GetAllZimmers();
         public Zimmer GetZimmerById(int id);
         public void DeleteZimmer(int id);
-        public void UpDateZimmer(int id, Zimmer z);
+        public void UpdateZimmer(int id, Zimmer z);
         public void AddZimmer(Zimmer z);
     }
 }
