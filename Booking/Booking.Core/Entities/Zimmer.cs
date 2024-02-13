@@ -13,7 +13,7 @@
         public int RenterId { get; set; }
         public Renter Renter { get; set; }
 
-        public List<Orders> Orders { get; set; }
+        public List<Order> Orders { get; set; }
 
 
 

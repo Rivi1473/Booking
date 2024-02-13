@@ -4,6 +4,7 @@ using Booking.API.Models;
 using Booking.Core.DTOs;
 using Booking.Core.Entities;
 using Booking.Core.Services;
+using Booking.Data.Migrations;
 using Booking.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,46 +26,56 @@ namespace Booking.Controllers
         }
         // GET: api/<RentersController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var lst = _zimmerService.GetAllZimmers();
+            var lst = await _zimmerService.GetAllZimmersAsync();
             var lstDto = new List<ZimmerDto>();
             foreach (var item in lst)
             {
                 lstDto.Add(_mapper.Map<ZimmerDto>(item));
             }
             return Ok(lstDto);
+
         }
 
         // GET api/<RentersController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int zimmerCode)
+        public async Task<ActionResult> Get(int zimmerCode)
         {
-            var z = _zimmerService.GetZimmerById(zimmerCode);
+            var z= await _zimmerService.GetZimmerByIdAsync(zimmerCode);
             return Ok(_mapper.Map<ZimmerDto>(z));
         }
 
         // POST api/<RentersController>
         [HttpPost]
-        public void Post([FromBody] ZimmerModel z)
+        public async Task<ActionResult> Post([FromBody] ZimmerModel z)
         {
-            var zimmer = new Zimmer { Name = z.Name, City = z.City, Address = z.Address, Price = z.Price, Description = z.Description, RenterId = z.RenterId };
-            _zimmerService.AddZimmer(zimmer);
+            var zimmer = new Zimmer();
+            await _zimmerService.AddZimmerAsync(zimmer);
+            _mapper.Map(z, zimmer);
+            return Ok(_mapper.Map<ZimmerDto>(zimmer));
         }
-
+        
+        
         // PUT api/<RentersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ZimmerModel z)
+        public async Task<ActionResult>  Put(int id, [FromBody] ZimmerModel z)
         {
-            var zimmer = new Zimmer { Name = z.Name, City = z.City, Address = z.Address, Price = z.Price, Description = z.Description, RenterId = z.RenterId };
-            _zimmerService.UpdateZimmer(id, zimmer);
+            var existZimmer = await _zimmerService.GetZimmerByIdAsync(id);
+            if (existZimmer is null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(z, existZimmer);
+            await _zimmerService.UpdateZimmerAsync(id, existZimmer);
+            return Ok();
         }
 
         // DELETE api/<RentersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _zimmerService.DeleteZimmer(id);
+            await _zimmerService.DeleteZimmerAsync(id);
 
         }
     }

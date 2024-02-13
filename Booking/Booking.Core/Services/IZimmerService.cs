@@ -9,11 +9,11 @@ namespace Booking.Core.Services
 {
     public interface IZimmerService
     {
-        public List<Zimmer> GetAllZimmers();
-        public Zimmer GetZimmerById(int id);
-        public void AddZimmer(Zimmer z);
-        public void UpdateZimmer(int id, Zimmer z);
+        public Task<List<Zimmer>> GetAllZimmersAsync();
+        public Task<Zimmer> GetZimmerByIdAsync(int id);
+        public Task AddZimmerAsync(Zimmer z);
+        public Task UpdateZimmerAsync(int id, Zimmer z);
 
-        public void DeleteZimmer(int id);
+        public Task DeleteZimmerAsync(int id);
     }
 }

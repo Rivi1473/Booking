@@ -5,7 +5,7 @@ namespace Booking.Date
 {
     public class DataContext: DbContext
     {
-        public DbSet<Orders> Orders { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Renter> Renters { get; set; }
         public DbSet<Zimmer> Zimmers { get; set; }
         public int CntOrders { get; set; }

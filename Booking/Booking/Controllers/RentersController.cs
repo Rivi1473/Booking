@@ -3,6 +3,7 @@ using Booking.API.Models;
 using Booking.Core.DTOs;
 using Booking.Core.Entities;
 using Booking.Core.Services;
+using Booking.Data.Migrations;
 using Booking.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,9 +27,9 @@ namespace Booking.Controllers
         }
         // GET: api/<RentersController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var lst = _renterService.GetAllRenters();
+            var lst = await _renterService.GetAllRentersAsync();
             var lstDto = new List<RenterDto>();
             foreach (var item in lst)
             {
@@ -39,34 +40,42 @@ namespace Booking.Controllers
 
         // GET api/<RentersController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var r= _renterService.GetRenterById(id);
-            return Ok(_mapper.Map<RenterDto>(r));
+            var z = await _renterService.GetRenterByIdAsync(id);
+            return Ok(_mapper.Map<RenterDto>(z));
         }
 
         // POST api/<RentersController>
         [HttpPost]
-        public ActionResult Post([FromBody] RenterModel r)
+        public async Task<ActionResult> Post([FromBody] RenterModel r)
         {
-            var renter = new Renter { Name = r.Name, Phone = r.Phone };
-            _renterService.AddRenter(renter);
-            return Ok(_mapper.Map<RenterDto>(renter));
+            var renter = new Renter();
+            await _renterService.AddRenterAsync(renter);
+            _mapper.Map(r, renter);       
+            return Ok(_mapper.Map<RenterDto>(renter));          
         }
 
         // PUT api/<RentersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] RenterModel r)
+        public async Task<ActionResult> Put(int id, [FromBody] RenterModel r)
         {
-            var renter = new Renter { Name = r.Name, Phone = r.Phone };
-            _renterService.UpdateRenter(id,renter);
+            var existRenter = await _renterService.GetRenterByIdAsync(id);
+            if (existRenter is null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(r, existRenter);
+            await _renterService.UpdateRenterAsync(id, existRenter);
+            return Ok();
+
         }
 
         // DELETE api/<RentersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _renterService.DeleteRenter(id);
+            await _renterService.DeleteRenterAsync(id);
 
         }
     }

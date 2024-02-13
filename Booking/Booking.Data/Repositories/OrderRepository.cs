@@ -1,6 +1,7 @@
 ﻿using Booking.Core.Entities;
 using Booking.Core.Repositories;
 using Booking.Date;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +17,26 @@ namespace Booking.Data.Repositories
         {
             _context = context;
         }
-        public List<Orders> GetAllOrders()
+        public async Task<List<Order>> GetAllOrdersAsync()
         {
-            return _context.Orders.ToList();
+            return await _context.Orders.ToListAsync();
+            //  return _context.Orders.Include(z=>z.Zimmer)
         }
-        public Orders GetOrdersById(int id)
+        public async Task<Order> GetOrdersByIdAsync(int id)
         {
-            return _context.Orders.Find(id);
+             return await _context.Orders.FindAsync(id);
+
+           // return await _context.Orders.Include(o => o.Renter).FirstAsync(o => o.Id == id);
         }
-        public void AddOrder(Orders o)
+        public async Task AddOrderAsync(Order o)
         {
             _context.Orders.Add(o);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
         }
-        public void UpdateOrder(int id ,Orders o)
+        public async Task UpdateOrderAsync(int id ,Order o)
         {
-            var order = GetOrdersById(id);
+            var order = GetOrdersByIdAsync(id).Result;
             if (order != null)
             {
                 order.ZimmerId = o.ZimmerId;
@@ -41,16 +45,17 @@ namespace Booking.Data.Repositories
                 order.OrderDate = o.OrderDate;
                 order.ArrivalDate = o.ArrivalDate;
                 order.DepartureDate = o.DepartureDate;
-                _context.SaveChanges();
-            }
-            
+                await _context.SaveChangesAsync();
+            }          
         }
-        public void DeleteOrder(int id)
+        public async Task DeleteOrderAsync(int id)
         {
-            var order = GetOrdersById(id);
-            _context.Orders.Remove(order);
-            _context.SaveChanges();
+            var order = GetOrdersByIdAsync(id);
+            _context.Orders.Remove(order.Result);
+            await _context.SaveChangesAsync();
         }
+
+       
     }
  
 

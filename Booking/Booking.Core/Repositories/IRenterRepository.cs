@@ -9,10 +9,10 @@ namespace Booking.Core.Repositories
 {
     public interface IRenterRepository
     {
-        public List<Renter> GetAllRenters();
-        public Renter GetRenterById(int id);
-        public void DeleteRenter(int id);
-        public void UpdateRenter(int id, Renter r);
-        public void AddRenter(Renter r);
+        public Task<List<Renter>> GetAllRentersAsync();
+        public Task<Renter> GetRenterByIdAsync(int id);
+        public Task DeleteRenterAsync(int id);
+        public Task UpdateRenterAsync(int id, Renter r);
+        public Task AddRenterAsync(Renter r);
     }
 }

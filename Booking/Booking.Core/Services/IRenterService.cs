@@ -9,12 +9,12 @@ namespace Booking.Core.Services
 {
     public interface IRenterService
     {
-        public List<Renter> GetAllRenters();
-        public Renter GetRenterById(int id);
-        public void AddRenter(Renter r);
-        public void UpdateRenter(int id, Renter r);
+        public Task<List<Renter>> GetAllRentersAsync();
+        public Task<Renter> GetRenterByIdAsync(int id);
+        public Task AddRenterAsync(Renter r);
+        public Task UpdateRenterAsync(int id, Renter r);
 
-        public void DeleteRenter(int id);
+        public Task DeleteRenterAsync(int id);
         
     }
 }

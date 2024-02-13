@@ -1,6 +1,7 @@
 ﻿using Booking.Core.Entities;
 using Booking.Core.Repositories;
 using Booking.Date;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,34 +17,38 @@ namespace Booking.Data.Repositories
         {
             _context = context;
         }
-        public List<Zimmer> GetAllZimmers()
+
+        public async Task<List<Zimmer>> GetAllZimmersAsync()
         {
-            return _context.Zimmers.ToList();
+            return await _context.Zimmers.ToListAsync();
+        //    return _context.Zimmers.Include(z => z.Zimmer)
         }
-        public Zimmer GetZimmerById(int id)
+        public async Task<Zimmer> GetZimmerByIdAsync(int id)
         {
-            return _context.Zimmers.Find( id);
+            return await _context.Zimmers.FindAsync(id);
         }
-        public void AddZimmer(Zimmer z)
+
+        public async Task AddZimmerAsync(Zimmer z)
         {
             _context.Zimmers.Add(z);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void UpdateZimmer(int id,Zimmer z)
+        public async Task UpdateZimmerAsync(int id,Zimmer z)
         {
-            var zimmer = GetZimmerById(id);
+            var zimmer = GetZimmerByIdAsync(id).Result;
             zimmer.Name = z.Name;
             zimmer.Price = z.Price;
             zimmer.Address = z.Address;
             zimmer.City = z.City;
             zimmer.Description = z.Description;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void DeleteZimmer(int id)
+        public async Task DeleteZimmerAsync(int id)
         {
-            var zimmer = GetZimmerById(id);
-            _context.Zimmers.Remove(zimmer);
-            _context.SaveChanges();
+            var zimmer = GetZimmerByIdAsync(id);
+            _context.Zimmers.Remove(zimmer.Result);
+            await _context.SaveChangesAsync();
+
         }
 
     }

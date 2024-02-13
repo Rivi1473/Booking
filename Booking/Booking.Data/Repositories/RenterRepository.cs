@@ -1,6 +1,7 @@
 ﻿using Booking.Core.Entities;
 using Booking.Core.Repositories;
 using Booking.Date;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,32 +17,33 @@ namespace Booking.Data.Repositories
         {
             _context = context;
         }
-        public List<Renter> GetAllRenters()
+        public async Task<List<Renter>> GetAllRentersAsync()
         {
-            return _context.Renters.ToList();
+            return await _context.Renters.ToListAsync();
+            //return _context.Renters.Include(z => z.Renter);
         }
-        public Renter GetRenterById(int id)
+        public async Task<Renter> GetRenterByIdAsync(int id)
         {
-            return _context.Renters.Find(id);
+            return await _context.Renters.FindAsync(id);
         }
         
-        public void AddRenter(Renter r)
+        public async Task AddRenterAsync(Renter r)
         {
             _context.Renters.Add(r);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void UpdateRenter(int id,Renter r)
+        public async Task UpdateRenterAsync(int id,Renter r)
         {
-            var renter = GetRenterById(id);         
+            var renter = GetRenterByIdAsync(id).Result;         
             renter.Name = r.Name;
             renter.Phone = r.Phone;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void DeleteRenter(int id)
+        public async Task DeleteRenterAsync(int id)
         {
-            var renter = GetRenterById(id);
-            _context.Renters.Remove(renter);
-            _context.SaveChanges();
+            var renter = GetRenterByIdAsync(id);
+            _context.Renters.Remove(renter.Result);
+            await _context.SaveChangesAsync();
         }
 
     }

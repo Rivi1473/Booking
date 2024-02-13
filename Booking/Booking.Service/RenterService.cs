@@ -17,26 +17,26 @@ namespace Booking.Service
         {
             _renterRepository = renterRepository;
         }
-        public List<Renter> GetAllRenters()
+        public async Task<List<Renter>> GetAllRentersAsync()
         {
-            return _renterRepository.GetAllRenters();
+            return await _renterRepository.GetAllRentersAsync();
         }
-        public Renter GetRenterById(int id)
+        public async Task<Renter> GetRenterByIdAsync(int id)
         {
-            return _renterRepository.GetRenterById(id);
+            return await _renterRepository.GetRenterByIdAsync(id);
         }
-        public void AddRenter(Renter renter)
+        public async Task AddRenterAsync(Renter renter)
         {
-            _renterRepository.AddRenter(renter);
+            await _renterRepository.AddRenterAsync(renter);
         }
         
-        public void UpdateRenter(int id,Renter renter)
+        public async Task UpdateRenterAsync(int id,Renter renter)
         {
-            _renterRepository.UpdateRenter(id,renter);
+            await _renterRepository.UpdateRenterAsync(id,renter);
         }
-        public void DeleteRenter(int id)
+        public async Task DeleteRenterAsync(int id)
         {
-            _renterRepository.DeleteRenter(id);
+            await _renterRepository.DeleteRenterAsync(id);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Booking.Core
         public MappingProfile()
         {
             CreateMap<Zimmer, ZimmerDto>().ReverseMap();
-            CreateMap<Orders, OrderDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Renter, RenterDto>().ReverseMap();
         }
     }

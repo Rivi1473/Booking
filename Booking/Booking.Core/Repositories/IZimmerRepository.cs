@@ -9,10 +9,10 @@ namespace Booking.Core.Repositories
 {
     public interface IZimmerRepository
     {
-        public List<Zimmer> GetAllZimmers();
-        public Zimmer GetZimmerById(int id);
-        public void DeleteZimmer(int id);
-        public void UpdateZimmer(int id, Zimmer z);
-        public void AddZimmer(Zimmer z);
+        public Task<List<Zimmer>> GetAllZimmersAsync();
+        public Task<Zimmer> GetZimmerByIdAsync(int id);
+        public Task DeleteZimmerAsync(int id);
+        public Task UpdateZimmerAsync(int id, Zimmer z);
+        public Task AddZimmerAsync(Zimmer z);
     }
 }

@@ -10,10 +10,11 @@ namespace Booking.Core.Repositories
 {
     public interface IOrderRepository
     {
-        public void AddOrder(Orders o);
-        public void UpdateOrder(int id, Orders o);
-        public void DeleteOrder(int id);
-        public Orders GetOrdersById(int id);
-        public List<Orders> GetAllOrders();
+        public Task<List<Order>> GetAllOrdersAsync();
+        public Task<Order> GetOrdersByIdAsync(int id);
+        public Task AddOrderAsync(Order o);
+        public Task UpdateOrderAsync(int id, Order o);
+        public Task DeleteOrderAsync(int id);
+      
     }
 }
