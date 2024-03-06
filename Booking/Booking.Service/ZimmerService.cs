@@ -24,19 +24,17 @@ namespace Booking.Service
         {
             return await _zimmerRepository.GetZimmerByIdAsync(id);
         }
-        public async Task AddZimmerAsync(Zimmer zimmer)
-        {
-            await _zimmerRepository.AddZimmerAsync(zimmer);
-        }
-
-        public async Task UpdateZimmerAsync(int id,Zimmer zimmer)
-        {
-            await _zimmerRepository.UpdateZimmerAsync(id,zimmer);
-        }
         public async Task DeleteZimmerAsync(int id)
         {
-            await _zimmerRepository.DeleteZimmerAsync(id);
+           await _zimmerRepository.DeleteZimmerAsync(id);
         }
-       
+        public async Task AddZimmerAsync(Zimmer zimmer)
+        {
+           await _zimmerRepository.AddZimmerAsync(zimmer);
+        }
+        public async Task UpDateZimmerAsync(int id,Zimmer zimmer)
+        {
+           await _zimmerRepository.UpDateZimmerAsync(id,zimmer);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Booking.Core.Entities
 {
-    public class Order:BaseModel
+    public class Orders:BaseModel
     {
            
         public string? TenantName { get; set; }

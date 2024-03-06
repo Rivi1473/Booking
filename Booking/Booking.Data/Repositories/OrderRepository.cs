@@ -17,25 +17,23 @@ namespace Booking.Data.Repositories
         {
             _context = context;
         }
-        public async Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<Orders>> GetAllOrdersAsync()
         {
             return await _context.Orders.ToListAsync();
-            //  return _context.Orders.Include(z=>z.Zimmer)
         }
-        public async Task<Order> GetOrdersByIdAsync(int id)
+        public Task<Orders> GetOrdersByIdAsync(int id)
         {
-             return await _context.Orders.FindAsync(id);
-
-           // return await _context.Orders.Include(o => o.Renter).FirstAsync(o => o.Id == id);
+            return _context.Orders.FirstAsync(i=>i.Id==id);
         }
-        public async Task AddOrderAsync(Order o)
+        public async Task DeleteOrderAsync(int id)
         {
-            _context.Orders.Add(o);
-            await _context.SaveChangesAsync();
-
+            var order = GetOrdersByIdAsync(id).Result;         
+            _context.Orders.Remove(order);  
+           await _context.SaveChangesAsync(); 
         }
-        public async Task UpdateOrderAsync(int id ,Order o)
+        public async Task UpDateOrderAsync(int id ,Orders o)
         {
+            //change
             var order = GetOrdersByIdAsync(id).Result;
             if (order != null)
             {
@@ -45,17 +43,16 @@ namespace Booking.Data.Repositories
                 order.OrderDate = o.OrderDate;
                 order.ArrivalDate = o.ArrivalDate;
                 order.DepartureDate = o.DepartureDate;
-                await _context.SaveChangesAsync();
-            }          
+               await _context.SaveChangesAsync();
+            }
+            
         }
-        public async Task DeleteOrderAsync(int id)
+        public async Task AddOrderAsync(Orders o)
         {
-            var order = GetOrdersByIdAsync(id);
-            _context.Orders.Remove(order.Result);
-            await _context.SaveChangesAsync();
-        }
+            _context.Orders.Add(o);
+           await _context.SaveChangesAsync();
 
-       
+        }
     }
  
 

@@ -9,11 +9,12 @@ namespace Booking.Core.Services
 {
     public interface IOrderService
     {
-        public Task<List<Order>> GetAllOrdersAsync();
-        public Task<Order> GetOrderByIdAsync(int id);
-        public Task AddOrderAsync(Order o);
-        public Task UpdateOrderAsync(int id,Order o);
+        public Task<List<Orders>> GetAllOrdersAsync();
+        public Task<Orders> GetOrderByIdAsync(int id);
+        public Task AddOrderAsync(Orders o);
+        public Task UpDateOrderAsync(int id,Orders o);
         public Task DeleteOrderAsync(int id);
-        
+      
+
     }
 }

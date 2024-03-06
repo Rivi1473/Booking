@@ -16,25 +16,25 @@ namespace Booking.Service
         {
             _orderRepository = orderRepository;
         }
-        public async Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<Orders>> GetAllOrdersAsync()
         {
             return await _orderRepository.GetAllOrdersAsync();
         }
-        public async Task<Order> GetOrderByIdAsync(int id) 
+        public async Task<Orders> GetOrderByIdAsync(int id) 
         {
             return await _orderRepository.GetOrdersByIdAsync(id);
         }
-        public async Task AddOrderAsync(Order order)
+        public async Task DeleteOrderAsync(int id)
+        {
+           await  _orderRepository.DeleteOrderAsync(id);
+        }
+        public async Task AddOrderAsync(Orders order)
         {
             await _orderRepository.AddOrderAsync(order);
         }
-        public async Task UpdateOrderAsync(int id, Order order)
+        public async Task UpDateOrderAsync(int id,Orders order)
         {
-            await _orderRepository.UpdateOrderAsync(id, order);
-        }
-        public async Task DeleteOrderAsync(int id)
-        {
-            await _orderRepository.DeleteOrderAsync(id);
+            await _orderRepository.UpDateOrderAsync(id,order);
         }
     }
 }

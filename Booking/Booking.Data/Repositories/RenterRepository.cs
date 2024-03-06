@@ -20,31 +20,38 @@ namespace Booking.Data.Repositories
         public async Task<List<Renter>> GetAllRentersAsync()
         {
             return await _context.Renters.ToListAsync();
-            //return _context.Renters.Include(z => z.Renter);
         }
         public async Task<Renter> GetRenterByIdAsync(int id)
         {
-            return await _context.Renters.FindAsync(id);
+            return await _context.Renters.FirstAsync(i=>i.Id==id);
         }
-        
-        public async Task AddRenterAsync(Renter r)
+        public async Task<Renter> GetRenterByNameAndPhoneAsync(string name, string phone)
         {
-            _context.Renters.Add(r);
-            await _context.SaveChangesAsync();
+            return await _context.Renters.Where(r => r.Name == name && r.Phone == phone).FirstOrDefaultAsync();
         }
-        public async Task UpdateRenterAsync(int id,Renter r)
+        public async Task DeleteRenterAsync(int id)
         {
+            var renter = GetRenterByIdAsync(id).Result;
+            _context.Renters.Remove(renter);
+           await _context.SaveChangesAsync();
+        }
+        public async Task UpDateRenterAsync(int id,Renter r)
+        {
+            //change
             var renter = GetRenterByIdAsync(id).Result;         
             renter.Name = r.Name;
             renter.Phone = r.Phone;
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteRenterAsync(int id)
+        public  async Task AddRenterAsync(Renter r)
         {
-            var renter = GetRenterByIdAsync(id);
-            _context.Renters.Remove(renter.Result);
-            await _context.SaveChangesAsync();
+            _context.Renters.Add(r);
+           await _context.SaveChangesAsync();
         }
 
+        public Task<Task<Renter>> GetByNameAndPhoneAsync(string name, string phone)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Booking.Core.Repositories
         public Task<List<Zimmer>> GetAllZimmersAsync();
         public Task<Zimmer> GetZimmerByIdAsync(int id);
         public Task DeleteZimmerAsync(int id);
-        public Task UpdateZimmerAsync(int id, Zimmer z);
+        public Task UpDateZimmerAsync(int id, Zimmer z);
         public Task AddZimmerAsync(Zimmer z);
     }
 }

@@ -19,17 +19,18 @@ namespace Booking.Controllers
     {
         private readonly IRenterService _renterService;
         private readonly IMapper _mapper;
+
         public RentersController(IRenterService renterService, IMapper mapper)
         {
             _mapper = mapper;
-            this._renterService =renterService;
+            _renterService =renterService;
 
         }
         // GET: api/<RentersController>
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var lst = await _renterService.GetAllRentersAsync();
+            var lst =await _renterService.GetAllRentersAsync();
             var lstDto = new List<RenterDto>();
             foreach (var item in lst)
             {
@@ -42,33 +43,33 @@ namespace Booking.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var z = await _renterService.GetRenterByIdAsync(id);
-            return Ok(_mapper.Map<RenterDto>(z));
+            var r=await _renterService.GetRenterByIdAsync(id);
+            return Ok(_mapper.Map<RenterDto>(r));
         }
 
         // POST api/<RentersController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] RenterModel r)
         {
+            //var renter = new Renter { Name = r.Name, Phone = r.Phone };
             var renter = new Renter();
+            _mapper.Map(r, renter);
             await _renterService.AddRenterAsync(renter);
-            _mapper.Map(r, renter);       
-            return Ok(_mapper.Map<RenterDto>(renter));          
+            return Ok(_mapper.Map<RenterDto>(renter));
         }
 
         // PUT api/<RentersController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] RenterModel r)
         {
-            var existRenter = await _renterService.GetRenterByIdAsync(id);
+            var existRenter =await _renterService.GetRenterByIdAsync(id);
             if (existRenter is null)
             {
                 return NotFound();
             }
             _mapper.Map(r, existRenter);
-            await _renterService.UpdateRenterAsync(id, existRenter);
+            await _renterService.UpDateRenterAsync(id, existRenter);
             return Ok();
-
         }
 
         // DELETE api/<RentersController>/5
@@ -76,7 +77,6 @@ namespace Booking.Controllers
         public async Task Delete(int id)
         {
             await _renterService.DeleteRenterAsync(id);
-
         }
     }
 }

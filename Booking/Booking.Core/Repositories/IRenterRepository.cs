@@ -11,8 +11,10 @@ namespace Booking.Core.Repositories
     {
         public Task<List<Renter>> GetAllRentersAsync();
         public Task<Renter> GetRenterByIdAsync(int id);
+        public Task<Renter> GetRenterByNameAndPhoneAsync(string name, string phone);
         public Task DeleteRenterAsync(int id);
-        public Task UpdateRenterAsync(int id, Renter r);
+        public Task UpDateRenterAsync(int id, Renter r);
         public Task AddRenterAsync(Renter r);
+        Task<Task<Renter>> GetByNameAndPhoneAsync(string name, string phone);
     }
 }

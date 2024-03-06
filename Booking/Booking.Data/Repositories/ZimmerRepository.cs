@@ -17,39 +17,35 @@ namespace Booking.Data.Repositories
         {
             _context = context;
         }
-
         public async Task<List<Zimmer>> GetAllZimmersAsync()
         {
             return await _context.Zimmers.ToListAsync();
-        //    return _context.Zimmers.Include(z => z.Zimmer)
         }
         public async Task<Zimmer> GetZimmerByIdAsync(int id)
         {
-            return await _context.Zimmers.FindAsync(id);
+            return await _context.Zimmers.FirstAsync(i=>i.Id== id);
         }
-
-        public async Task AddZimmerAsync(Zimmer z)
+        public async Task DeleteZimmerAsync(int id)
         {
-            _context.Zimmers.Add(z);
-            await _context.SaveChangesAsync();
+            var zimmer = GetZimmerByIdAsync(id).Result;
+            _context.Zimmers.Remove(zimmer);
+           await _context.SaveChangesAsync();
         }
-        public async Task UpdateZimmerAsync(int id,Zimmer z)
+        public async Task UpDateZimmerAsync(int id,Zimmer z)
         {
+            //change
             var zimmer = GetZimmerByIdAsync(id).Result;
             zimmer.Name = z.Name;
             zimmer.Price = z.Price;
             zimmer.Address = z.Address;
             zimmer.City = z.City;
             zimmer.Description = z.Description;
-            await _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
         }
-        public async Task DeleteZimmerAsync(int id)
+        public async Task AddZimmerAsync(Zimmer z)
         {
-            var zimmer = GetZimmerByIdAsync(id);
-            _context.Zimmers.Remove(zimmer.Result);
-            await _context.SaveChangesAsync();
-
+            _context.Zimmers.Add(z);
+           await _context.SaveChangesAsync();
         }
-
     }
 }
